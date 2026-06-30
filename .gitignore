@@ -216,3 +216,29 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+#  ignore my dev notes
+notes.md
+
+# ingore all onnx models
+*.onnx
+
+# Ignore node_moduels
+
+node_modules
+
+
+
+
+#  ignore my dev notes
+notes.md
+
+# ingore all onnx models
+*.onnx
+
+# Ignore node_moduels
+
+node_modules
+
+
+
