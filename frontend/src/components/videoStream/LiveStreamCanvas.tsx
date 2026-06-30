@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import { renderBoundingBoxes } from "./BoundingBoxRenderer"
+import { renderBoundingBoxes } from "./BoundingBoxOverlay"
 import { adaptYOLODetections } from "../../services/detectionAdapter"
 import { RawYOLODetection } from "../../types/detection.types"
 

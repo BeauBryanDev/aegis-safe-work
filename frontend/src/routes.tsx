@@ -1,12 +1,10 @@
 import { Routes, Route } from "react-router-dom"
-import Dashboard from "../pages/Dashboard"
-import Metrics from "../pages/Metrics"
-import Alerts from "../pages/Alerts"
-import Logs from "../pages/Logs"
-import Settings from "../pages/Settings"
-import MainLayout from "../layouts/MainLayout"
-import Home from "../pages/Home"
-import { useState } from "react"
+import Dashboard from "./pages/Dashboard"
+import Metrics from "./pages/Metrics"
+import Alerts from "./pages/Alerts"
+import Logs from "./pages/Logs"
+import Settings from "./pages/Settings"
+import MainLayout from "./layouts/MainLayout"
 
 export const AppRoutes = () => {
   return (

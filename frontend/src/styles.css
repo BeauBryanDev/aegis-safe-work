@@ -27,6 +27,13 @@ CYBERPUNK DESIGN TOKENS
 /* 
    🧱 BASE RESET
  */
+/* Root font scale — every rem-based size in the HUD scales from here.
+   16px is the browser default; 19px (~119%) enlarges the whole UI uniformly
+   for readability while preserving the mockup proportions. */
+html {
+  font-size: 19px;
+}
+
 html, body, #root {
   height: 100%;
   margin: 0;
