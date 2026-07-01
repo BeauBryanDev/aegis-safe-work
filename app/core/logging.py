@@ -45,8 +45,6 @@ class JSONFormatter(logging.Formatter):
  
  
 # Local Dev
-
-
 class HumanFormatter(logging.Formatter):
     def __init__(self):
         super().__init__(

@@ -110,9 +110,7 @@ class PPEDetection(Base):
         )
  
  
- 
 #  Fall Events 
-
 
 class FallEvent(Base):
     """
@@ -173,8 +171,7 @@ class FallEvent(Base):
         )
 
 
-#  Fire / Smoke Events 
-
+#  Fire / Smoke Events
 
 class FireSmokeEvent(Base):
     """

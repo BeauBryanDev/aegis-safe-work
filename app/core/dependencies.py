@@ -31,8 +31,7 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
  
 DBSession = Annotated[AsyncSession, Depends(get_db)]
  
- 
-# # ONNX Runtime sessions — loaded once at startup, stored on app.state
+# ONNX Runtime sessions — loaded once at startup, stored on app.state
 
 def get_ppe_session(request: Request):
     """

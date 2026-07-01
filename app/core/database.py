@@ -33,9 +33,7 @@ AsyncSessionLocal = async_sessionmaker(
     autoflush=False,
 )
  
-
 # Declarative base — all ORM models inherit from this
- 
 class Base(DeclarativeBase):
     pass
  
