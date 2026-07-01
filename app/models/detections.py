@@ -22,16 +22,15 @@ SCHEMA = "aegis_safe_work"
 """ 
 Aegis-Safe-Work | ORM Models — Detection Events
 Three tables, 1/ model pipeline:
-    - ppe_detections  : per-frame PPE compliance results per person
-    - fall_events     : fall detector results per track_id per inference window
-    - fire_smoke_events: fire/smoke events reported from client-side ONNX.js
+- ppe_detections  : per-frame PPE compliance results per person
+- fall_events     : fall detector results per track_id per inference window
+- fire_smoke_events: fire/smoke events reported from client-side ONNX.js
 """
 
 class PPEComplianceStatus(str, enum.Enum):
     COMPLIANT     = "compliant"
     NON_COMPLIANT = "non_compliant"
-    PARTIAL       = "partial"       # some items present, some missing
- 
+    PARTIAL       = "partial"      
  
 class FallPrediction(str, enum.Enum):
     NORMAL = "normal"
@@ -86,6 +85,7 @@ class PPEDetection(Base):
     has_vest:   Mapped[bool]  = mapped_column(Boolean, nullable=False, default=False)
     has_gloves: Mapped[bool]  = mapped_column(Boolean, nullable=False, default=False)
     has_boots:  Mapped[bool]   = mapped_column(Boolean, nullable=False, default=False)
+    has_goggles: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
  
     # Aggregate compliance status derived from the four PPE flags
     compliance_status: Mapped[PPEComplianceStatus] = mapped_column(

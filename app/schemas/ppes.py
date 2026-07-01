@@ -54,6 +54,7 @@ class PersonCompliance(BaseModel):
     has_vest:   bool = False
     has_gloves: bool = False
     has_boots:  bool = False
+    has_goggles: bool = False
  
     # Derived compliance status
     compliance_status: PPEComplianceStatus = PPEComplianceStatus.NON_COMPLIANT
@@ -63,9 +64,10 @@ class PersonCompliance(BaseModel):
  
     @model_validator(mode="after")
     def compute_compliance(self) -> "PersonCompliance":
-        all_items    = [self.has_helmet, self.has_vest, self.has_gloves, self.has_boots]
-        present      = sum(all_items)
-        missing      = []
+        
+        mandatory = [self.has_helmet, self.has_vest, self.has_gloves, self.has_boots, self.has_goggles]
+        present   = sum(mandatory)
+        missing   = []
  
         if not self.has_helmet: missing.append("helmet")
         if not self.has_vest:   missing.append("vest")
@@ -143,7 +145,6 @@ class PPEDetectionCreate(BaseModel):
  
  
 # Rest Response Schema
-
 class PPEDetectionOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
  
@@ -161,12 +162,12 @@ class PPEDetectionOut(BaseModel):
     has_vest:          bool
     has_gloves:        bool
     has_boots:         bool
+    has_goggles:       bool
     compliance_status: PPEComplianceStatus
     inference_ms:      Optional[float]
  
  
 # Web Socket Push Payload Real time frame buffer
-
 class PPEWebSocketOut(BaseModel):
     event:        str = "ppe_frame"
     camera_id:    str
@@ -178,8 +179,6 @@ class PPEWebSocketOut(BaseModel):
  
  
 # Fire and Smoke Detection
-
-
 class FireSmokeWebSocketIn(BaseModel):
     """
     Payload structure expected from the browser when ONNX.js detects
@@ -199,7 +198,6 @@ class FireSmokeWebSocketIn(BaseModel):
  
  
 # Fire and Smoke DB Wirte schema
-
 class FireSmokeEventCreate(BaseModel):
     camera_id:           str
     class_name:          FireSmokeClass
@@ -214,7 +212,6 @@ class FireSmokeEventCreate(BaseModel):
  
  
 # Fire Smoke REST Response
-
 
 class FireSmokeEventOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -233,7 +230,6 @@ class FireSmokeEventOut(BaseModel):
  
 
 # Paged List Response
-
 
 class PPEDetectionListOut(BaseModel):
     total: int

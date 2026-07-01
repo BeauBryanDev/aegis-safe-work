@@ -14,7 +14,6 @@ class Settings(BaseSettings):
         extra="ignore",
     )
  
- 
     # App
     APP_NAME: str        = "Aegis-Safe-Work"
     APP_VERSION: str     = "1.0.0"
@@ -34,7 +33,7 @@ class Settings(BaseSettings):
     # Database — postgresql+asyncpg via RDS / EC2 bastion
     DATABASE_URL: str = (
         "postgresql+asyncpg://user:password@localhost:5432/aegis_safe_work"
-    )
+    ) #TODO: Update with real credentials and host,  CRITICAL HARDCODE,  SUPER UNSAFE,  DO NOT COMMIT TO GIT,  USE ENV VARS INSTEAD
     DB_POOL_SIZE: int       = 5
     DB_MAX_OVERFLOW: int    = 10
     DB_POOL_TIMEOUT: int    = 30
@@ -64,17 +63,24 @@ class Settings(BaseSettings):
     PPE_INPUT_SIZE: int         = 640
  
     # Class indices — must match training label map
+    # Class indices — Ultralytics construction-ppe dataset (11 classes)
+    # Source: https://docs.ultralytics.com/datasets/detect/construction-ppe
+    # Positive PPE presence classes (used for compliance assignment)
     PPE_CLASS_HELMET: int       = 0
     PPE_CLASS_GLOVES: int       = 1
     PPE_CLASS_VEST: int         = 2
     PPE_CLASS_BOOTS: int        = 3
     PPE_CLASS_GOGGLES: int      = 4
+    # Ignored classes — artefact or unreliable mAP on no_* classes
     PPE_CLASS_NONE: int         = 5
-    PPE_CLASS_PERSON: int       = 6
-    PPE_CLASS_NO_HELMET: int    = 7
-    PPE_CLASS_NO_GOGGLE: int    = 8
-    PPE_CLASS_NO_GLOVES: int    = 9
-    PPE_CLASS_NO_BOOTS: int     = 10
+    PPE_CLASS_PERSON: int       = 6 # It s used for bbox + spatial assignment
+    PPE_CLASS_NO_HELMET: int    = 7  #  this class is ignored
+    PPE_CLASS_NO_GOGGLE: int    = 8  # Low mAP, unreliable, ignored for compliance assignment
+    PPE_CLASS_NO_GLOVES: int    = 9  # doesn ot work,  rubbish in training
+    PPE_CLASS_NO_BOOTS: int     = 10 #  this class is ignored
+    
+    # Positive PPE class set — only these trigger compliance flags
+    PPE_POSITIVE_CLASSES: List[int] = [0, 1, 2, 3, 4]
  
     # Post-processing caps (overcounting correction)
     MAX_GLOVES_PER_PERSON: int  = 2
@@ -101,13 +107,11 @@ class Settings(BaseSettings):
     # Spatial assignment — PPE to Person IoU threshold
     SPATIAL_IOU_THRESHOLD: float = 0.15
  
-
     # Alerts
 
     ALERT_COOLDOWN_SECONDS: int  = 10   # suppress duplicate alerts per track_id
  
  
-
 # Singleton — import this everywhere
 
 settings = Settings()
