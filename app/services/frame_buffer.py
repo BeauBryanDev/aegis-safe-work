@@ -16,9 +16,6 @@ every FRAME_BUFFER_STEP new frames to decide if a fall occurred.
 When a track_id disappears from the tracker (person leaves scene),
 its buffer is evicted after TRACKER_MAX_AGE frames of absence
 """
-
-
-
 class FrameBuffer:
     """
     Circular buffer of letterboxed RGB frames for one tracked person.
@@ -87,10 +84,6 @@ class FrameBuffer:
         Build and return a (1, 16, 3, 224, 224) float32 tensor from the
         current buffer contents, ready for the fall detector ONNX model.
  
-        Imports letterboxing.build_fall_tensor to apply ImageNet normalization
-        and axis transposition. The frames in the buffer are stored as uint8
-        RGB to minimize memory; normalization happens here at inference time.
- 
         Resets the new-frame counter after building the tensor.
  
         Returns:
@@ -125,12 +118,7 @@ class FrameBufferManager:
     Central manager for all active FrameBuffer instances.
     One instance lives on app.state.frame_buffer_manager for the lifetime
     of the FastAPI application.
- 
-    Responsibilities:
-        - Create a new FrameBuffer when a new track_id appears
-        - Push frames to the correct buffer per track_id
-        - Return buffers that are ready for fall inference
-        - Evict stale buffers for track_ids that have left the scene
+
     """
  
     def __init__(
